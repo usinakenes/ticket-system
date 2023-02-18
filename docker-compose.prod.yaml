@@ -1,0 +1,8 @@
+version: "3"
+services:
+  client:
+    command: "serve -s build"
+  server:
+    command: "pm2-runtime index.js"
+    environment:
+      - NODE_ENV=production

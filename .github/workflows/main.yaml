@@ -1,0 +1,27 @@
+name: CD
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  CD:
+    name: Continuous Delivery
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into production server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd biljettsystem
+            git pull origin main
+            git status
+            docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml build
+            docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up -d

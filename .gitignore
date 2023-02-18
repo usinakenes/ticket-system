@@ -1,0 +1,11 @@
+# MacOS stuff
+.DS_Store
+
+# nodeJS
+node_modules/
+
+# nodeJS stuff in root
+/package*.json
+
+# db
+pgdata/

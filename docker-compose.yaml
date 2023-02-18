@@ -1,0 +1,25 @@
+version: "3"
+services:
+  client:
+    build: ./client
+    ports:
+      - 3000:3000
+  server:
+    build: ./server
+    ports:
+      - 7050:7050
+    environment:
+      - DB_HOST=db
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/pvk_db_dummy?schema=public
+
+  db:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=pvk_db_dummy
+    volumes:
+      - "./database/pgdata:/var/lib/postgresql/data"
+    ports:
+      - 5432:5432

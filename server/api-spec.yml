@@ -1,0 +1,77 @@
+tags:
+  - name: event
+    description: Api for accessing event information
+  - name: ticket
+    description: Api for interacting with tickets
+  - name: auth
+    description: Api for handling login and logout
+  - name: email
+    description: Api for sending email to client
+  - name: order
+    description: Api for viewing current user orders
+components:
+  securitySchemes:
+    oAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
+      flows:
+        authorizationCode: 
+          authorizationUrl: /api/auth/google
+          scopes:
+            logged_in: When logged in
+  schemas:
+    EventLocation:
+      type: object
+      properties:
+        title:
+          type: string
+        address:
+          type: string
+        lat:
+          type: number
+        lng:
+          type: number
+    Event:
+      type: object
+      properties:
+        eventId:
+          type: integer
+        shortTitle:
+          type: string
+          example: Queen
+        longTitle:
+          type: string
+          example: Queen World Tour 2022
+        description:
+          type: string
+          example: Watch Queens last tour live, it will be great! This is the last chance to see your favorite rock band live!!
+        price:
+          type: integer
+          example: 819
+        startTime:
+          type: string
+          format: date-time
+        releaseTime:
+          type: string
+          format: date-time
+        locationUrl:
+          type: string
+          example: https://www.google.com/maps/search/?api=1&query=59.324059%2C18.097304
+        eventPictureLink:
+          type: string
+        location:
+          type: object
+          $ref: '#/components/schemas/EventLocation'
+    TicketType:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        price:
+          type: number
+        description:
+          type: string
+        numberAvailable:
+          type: number

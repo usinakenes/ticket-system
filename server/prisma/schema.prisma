@@ -1,0 +1,69 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id               Int           @id @default(autoincrement())
+  shortTitle       String
+  longTitle        String
+  description      String?
+  startTime        DateTime      @db.Timestamp(6)
+  releaseTime      DateTime?     @db.Timestamp(6)
+  eventPictureLink String?
+  locationId       Int           @unique
+  location         EventLocation @relation(fields: [locationId], references: [id])
+  orders           Order[]
+  ticketTypes      TicketType[]
+}
+
+model EventLocation {
+  id      Int    @id @default(autoincrement())
+  lat     Float
+  lng     Float
+  title   String
+  address String
+  event   Event?
+}
+
+model Order {
+  id           String      @id @default(uuid())
+  userId       Int
+  eventId      Int
+  purchaseTime DateTime @db.Timestamp(6)
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tickets      Ticket[]
+}
+
+model TicketType {
+  id          Int      @id @default(autoincrement())
+  title       String
+  eventId     Int
+  price       Float
+  description String?
+  numTickets  Int
+  standard    Boolean  @default(false)
+  tickets     Ticket[]
+  event       Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
+
+model Ticket {
+  id           Int        @id @default(autoincrement())
+  orderId      String
+  ticketTypeId Int
+  ticketType   TicketType @relation(fields: [ticketTypeId], references: [id], onDelete: Cascade)
+  order        Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id     Int     @id @default(autoincrement())
+  name   String?
+  email  String  @unique 
+  orders Order[]
+}
