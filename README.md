@@ -1,5 +1,14 @@
 # biljettsystem
-PVK Project 2022
+KTH Royal Institute of Technology PVK Group Project 2022.
+Contriutors:
+- Carl Bentzer
+- Erik Betzholtz 
+- Josefina Häkkinen 
+- Umut Sina Kenes 
+- Marcus Nilszén 
+- Adrian Salamon
+- Klara Sandström 
+- Harry Thulin
 
 ## How to run
 For the whole application to work properly, you need to run the client, server and database at the same time.
