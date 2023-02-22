@@ -1,6 +1,6 @@
 # biljettsystem
 KTH Royal Institute of Technology PVK Group Project 2022.
-Contriutors:
+Contributors:
 - Carl Bentzer
 - Erik Betzholtz 
 - Josefina Häkkinen 
